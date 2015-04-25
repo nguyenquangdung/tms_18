@@ -64,5 +64,18 @@ module SessionsHelper
   def store_location
     session[:forwarding_url] = request.url if request.get?
   end
+
+  
+  def supervisor_required? user
+    user.role == "supervisor"
+    
+  end
+  
+  def checked_supervisor
+    redirect_to(root_url) unless current_user.role == "supervisor"
+  end
+  def be_trainee
+    redirect_to(root_url) unless current_trainee.supervisor == 0
+  end
 end
 
