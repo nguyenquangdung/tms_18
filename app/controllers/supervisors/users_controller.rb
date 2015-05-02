@@ -1,6 +1,6 @@
 class Supervisors::UsersController < ApplicationController
   before_filter :logged_in_user
-  before_filter :correct_user
+  #before_filter :correct_user
   before_filter :checked_supervisor
 
   def index
@@ -20,7 +20,7 @@ class Supervisors::UsersController < ApplicationController
     if @user.save
       log_in @user
       flash[:success] = "Welcome to the Sample App!"
-      redirect_to supervisor_user_path(@user)
+      redirect_to supervisors_user_path(@user)
     else
       render 'new'
     end
@@ -34,7 +34,7 @@ class Supervisors::UsersController < ApplicationController
     @user = User.find(params[:id])
     if @user.update_attributes(user_params)
       flash[:success] = "Profile updated"
-      redirect_to @user
+      redirect_to supervisors_user_path(@user)
     else
       render 'edit'
     end
@@ -43,7 +43,7 @@ class Supervisors::UsersController < ApplicationController
   def destroy
     User.find(params[:id]).destroy
     flash[:success] = "User destroyed."
-    redirect_to supervisor_user_url
+    redirect_to supervisors_users_path
   end
 
   private

@@ -1,5 +1,5 @@
-<% provide(:title, 'Edit profile') %>
-<h1>Update profile</h1>
+<% provide(:title, 'Create new trainee') %>
+<h1>Create new trainee</h1>
 
 <div class="row">
   <div class="col-md-6 col-md-offset-3">
@@ -26,7 +26,7 @@
 
       <%= f.label :role, "Role" %><br>
       <%= f.select :role, ["user","supervisor"] %>
-      <%= f.submit "Save change", class: "btn btn-primary" %>
+      <%= f.submit "Create", class: "btn btn-primary" %>
     <% end %>
   </div>
 </div>

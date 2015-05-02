@@ -1,9 +1,10 @@
-<% provide(:title, 'All users') %>
-<h1>All users</h1>
+<% provide(:title, 'All Trainees') %>
+<h1>All Trainees</h1>
 
 <%= will_paginate %>
 
 <ul class="users">
+<p><%= link_to "Create new trainee", new_supervisors_user_path %> </p>
   <%= render @users %>
 </ul>
 
