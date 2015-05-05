@@ -1,7 +1,4 @@
 class CreateUsers < ActiveRecord::Migration
-  has_and_belongs_to_many :courses
-  has_and_belongs_to_many :subjects
-  has_and_belongs_to_many :tasks
   def change
     create_table :users do |t|
       t.string :name
@@ -11,7 +8,7 @@ class CreateUsers < ActiveRecord::Migration
       t.date :date_of_birth
       t.string :role
 
-      t.timestamps null: false
+      t.timestamps 
     end
   end
 end

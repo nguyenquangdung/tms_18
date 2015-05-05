@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150419000431) do
+ActiveRecord::Schema.define(version: 20150504175513) do
 
   create_table "courses", force: :cascade do |t|
     t.string   "name"
@@ -19,31 +19,71 @@ ActiveRecord::Schema.define(version: 20150419000431) do
     t.integer  "created_by"
     t.datetime "begin"
     t.datetime "end"
-    t.datetime "created_at",  null: false
-    t.datetime "updated_at",  null: false
+    t.integer  "user_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
-  create_table "courses_subjects", id: false, force: :cascade do |t|
-    t.integer "course_id",  null: false
-    t.integer "subject_id", null: false
+  add_index "courses", ["user_id"], name: "index_courses_on_user_id"
+
+  create_table "courses_subjects", force: :cascade do |t|
+    t.integer  "course_id"
+    t.integer  "subject_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
-  create_table "courses_users", id: false, force: :cascade do |t|
-    t.integer "user_id",   null: false
-    t.integer "course_id", null: false
-  end
+  add_index "courses_subjects", ["course_id"], name: "index_courses_subjects_on_course_id"
+  add_index "courses_subjects", ["subject_id"], name: "index_courses_subjects_on_subject_id"
 
   create_table "subjects", force: :cascade do |t|
     t.string   "name"
     t.text     "description"
     t.integer  "created_by"
-    t.datetime "created_at",  null: false
-    t.datetime "updated_at",  null: false
+    t.integer  "user_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
-  create_table "subjects_users", id: false, force: :cascade do |t|
-    t.integer  "user_id",       null: false
-    t.integer  "subject_id",    null: false
+  add_index "subjects", ["user_id"], name: "index_subjects_on_user_id"
+
+  create_table "supervisors_courses", force: :cascade do |t|
+    t.integer  "user_id"
+    t.integer  "course_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "tasks", force: :cascade do |t|
+    t.string   "name"
+    t.text     "description"
+    t.integer  "created_by"
+    t.integer  "subject_id"
+    t.integer  "user_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "tasks", ["subject_id"], name: "index_tasks_on_subject_id"
+  add_index "tasks", ["user_id"], name: "index_tasks_on_user_id"
+
+  create_table "users", force: :cascade do |t|
+    t.string   "name"
+    t.string   "email"
+    t.string   "password_digest"
+    t.string   "full_name"
+    t.date     "date_of_birth"
+    t.string   "role"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.string   "remember_digest"
+  end
+
+  add_index "users", ["email"], name: "index_users_on_email"
+
+  create_table "users_courses", force: :cascade do |t|
+    t.integer  "user_id"
+    t.integer  "course_id"
     t.integer  "assigned_by"
     t.datetime "time_assigned"
     t.string   "complete"
@@ -51,30 +91,49 @@ ActiveRecord::Schema.define(version: 20150419000431) do
     t.string   "confirm"
     t.datetime "time_confirm"
     t.integer  "confirmed_by"
+    t.integer  "supervisors_courses_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
-  add_index "subjects_users", ["subject_id", "user_id"], name: "index_subjects_users_on_subject_id_and_user_id"
-  add_index "subjects_users", ["user_id", "subject_id"], name: "index_subjects_users_on_user_id_and_subject_id"
+  add_index "users_courses", ["course_id"], name: "index_users_courses_on_course_id"
+  add_index "users_courses", ["supervisors_courses_id"], name: "index_users_courses_on_supervisors_courses_id"
+  add_index "users_courses", ["user_id"], name: "index_users_courses_on_user_id"
 
-  create_table "tasks", force: :cascade do |t|
-    t.string   "name"
-    t.text     "description"
-    t.integer  "created_by"
+  create_table "users_subjects", force: :cascade do |t|
+    t.integer  "user_id"
     t.integer  "subject_id"
-    t.datetime "created_at",  null: false
-    t.datetime "updated_at",  null: false
+    t.integer  "assigned_by"
+    t.datetime "time_assigned"
+    t.string   "complete"
+    t.datetime "time_complete"
+    t.string   "confirm"
+    t.datetime "time_confirm"
+    t.integer  "confirmed_by"
+    t.integer  "supervisors_courses_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
-  create_table "users", force: :cascade do |t|
-    t.string   "name"
-    t.string   "email"
-    t.string   "password_digest"
-    t.string   "full_name"
-    t.datetime "date_of_birth"
-    t.string   "role"
-    t.datetime "created_at",      null: false
-    t.datetime "updated_at",      null: false
-    t.string   "remember_digest"
+  add_index "users_subjects", ["subject_id"], name: "index_users_subjects_on_subject_id"
+  add_index "users_subjects", ["supervisors_courses_id"], name: "index_users_subjects_on_supervisors_courses_id"
+  add_index "users_subjects", ["user_id"], name: "index_users_subjects_on_user_id"
+
+  create_table "users_tasks", force: :cascade do |t|
+    t.integer  "user_id"
+    t.integer  "task_id"
+    t.string   "complete"
+    t.datetime "time_complete"
+    t.string   "confirm"
+    t.datetime "time_confirm"
+    t.integer  "confirmed_by"
+    t.integer  "supervisors_courses_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
+
+  add_index "users_tasks", ["supervisors_courses_id"], name: "index_users_tasks_on_supervisors_courses_id"
+  add_index "users_tasks", ["task_id"], name: "index_users_tasks_on_task_id"
+  add_index "users_tasks", ["user_id"], name: "index_users_tasks_on_user_id"
 
 end

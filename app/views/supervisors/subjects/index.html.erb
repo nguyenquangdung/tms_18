@@ -1,0 +1,19 @@
+<h1>Listing subjects</h1>
+
+  <tbody>
+    <% @subjects.each do |subject| %>
+      <strong>Subject Name:</strong> <%= subject.name %><br>
+      <strong>Description:</strong> <%= subject.description %><br>
+
+      <%= link_to "Show", supervisors_subject_path(subject) %>
+      <%= link_to "Edit", edit_supervisors_subject_path(subject) %>
+      <%= link_to "Delete", supervisors_subject_path(subject),
+      method: :delete, data: {confirm: "Are you sure?"} %><br>
+
+      <strong>List of Tasks:</strong><br>
+      <% subject.tasks.each do |task| %>
+        <strong>Task Name:</strong> <%= task.name %><br>
+      <% end %><br>
+    <% end %>
+  </tbody><br>
+<%= link_to "New subject", new_supervisors_subject_path %>

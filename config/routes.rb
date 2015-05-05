@@ -16,6 +16,8 @@ Rails.application.routes.draw do
     match '/logout', to: 'sessions#destroy', via: 'delete'
     resources :sessions, only: [:new, :create, :destroy]
     resources :users
+    resources :subjects
+    resources :tasks
   end
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
