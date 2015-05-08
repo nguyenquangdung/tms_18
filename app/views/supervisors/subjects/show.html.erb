@@ -3,7 +3,7 @@
   <strong>Description:</strong> <%= @subject.description %><br>
 
   <%= link_to "Edit", edit_supervisors_subject_path(@subject) %>
-  <%= link_to "Delete", @subject, method: :delete, data: {confirm: "Are you sure?"} %>
+  <%= link_to "Delete", supervisors_subject_path, method: :delete, data: {confirm: "Are you sure?"} %>
 
   <h2>List of tasks</h2>
   <% @tasks.each do |task| %>

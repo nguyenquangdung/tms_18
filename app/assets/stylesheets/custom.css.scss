@@ -13,6 +13,9 @@ $gray-medium-light: #eaeaea;
 }
 
 /* universal */
+html {
+  overflow-y: scroll;
+}
 
 body {
   padding-top: 60px;
@@ -103,7 +106,11 @@ footer {
     }
   }
 }
-
+@mixin box_sizing {
+  -moz-box-sizing:    border-box;
+  -webkit-box-sizing: border-box;
+  box-sizing:         border-box;
+}
 /* miscellaneous */
 
 .debug_dump {
@@ -152,7 +159,32 @@ aside {
 .gravatar_edit {
   margin-top: 15px;
 }
+.stats {
+  overflow: auto;
+  margin-top: 0;
+  padding: 0;
+  a {
+    float: left;
+    padding: 0 10px;
+    border-left: 1px solid $gray-lighter;
+    color: gray;
+    &:first-child {
+      padding-left: 0;
+      border: 0;
+    }
+    &:hover {
+      text-decoration: none;
+      color: blue;
+    }
+  }
+  strong {
+    display: block;
+  }
+}
 
+.users.follow {
+  padding: 0;
+}
 /* forms */
 
 input, textarea, select, .uneditable-input {
@@ -189,7 +221,11 @@ input {
     font-weight: normal;
   }
 }
-
+.selection_checkbox {
+  width: 14px; 
+  position: absolute;
+  right: 10px;
+}
 #session_remember_me {
   width: auto;
   margin-left: 0;

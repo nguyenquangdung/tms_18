@@ -1,15 +1,20 @@
 class Supervisors::SubjectsController < ApplicationController
-  before_filter :logged_in_user
-  before_filter :current_subject, only: [:show, :edit, :destroy, :update] 
+  before_action :logged_in_user
+  before_action :current_subject, only: [:show, :edit, :destroy, :update] 
 
   def index
     @subjects = Subject.all
     @tasks = Task.all
+      
   end
- 
 
   def show
-    @tasks = @subject.tasks
+    @subjects = @course.subjects
+    @users = @course.users
+ 
+    @subjects.each do |subject|
+      @enrollment_task = subject.enrollment_tasks.new
+    end
   end
 
   def new
@@ -45,10 +50,10 @@ class Supervisors::SubjectsController < ApplicationController
     redirect_to supervisors_subjects_path
   end
 
-
-   private
+  private
   def subject_params
-    params.require(:subject).permit :name, :description, :created_by ,tasks_attributes: [:name, :id, :_destroy ,:description]
+    params.require(:subject).permit :name, :description,
+     tasks_attributes: [:name, :id, :_destroy, :description]
   end
 
   def logged_in_user

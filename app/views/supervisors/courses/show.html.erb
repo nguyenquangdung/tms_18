@@ -1,0 +1,48 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Name:</strong>
+  <%= @course.name %>
+</p>
+
+<p>
+  <strong>Description:</strong>
+  <%= @course.description %>
+</p>
+
+<p>
+  <strong>Begin:</strong>
+  <%= @course.begin %>
+</p>
+
+<p>
+  <strong>End:</strong>
+  <%= @course.end %>
+</p>
+
+<h2>
+  <strong>List subject of this course</strong>
+</h2>
+
+<% @subjects.each do |subject| %>
+  <strong>Subject Name:</strong> <%= subject.name %><br>
+  <strong>Description:</strong><%= subject.description %><br>
+  
+
+
+  <%= link_to "Show", supervisors_subject_path(subject) %>
+  <%= link_to "Edit", edit_supervisors_subject_path(subject) %>
+  <%= link_to "Delete", supervisors_subject_path(subject),
+  method: :delete, data: {confirm: "Are you sure?"} %><br>
+
+  <strong>List of Tasks:</strong><br>
+  <% subject.tasks.each do |task| %>
+      <strong>Task Name:</strong> <%= task.name %><br>
+  <% end %><br>
+<% end %>
+
+<h2>
+  
+
+
+<%= link_to 'Back', supervisors_courses_path %>
